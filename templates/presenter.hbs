@@ -1,0 +1,66 @@
+<div class="narrae-presenter__body">
+  <section class="narrae-presenter__dropzone" data-dropzone>
+    <i class="fas fa-file-image"></i>
+    <strong>Déposer une image</strong>
+    <span>Origin Vault, FilePicker ou asset Foundry</span>
+  </section>
+
+  <div class="narrae-presenter__field">
+    <label for="narrae-presenter-path">Chemin image</label>
+    <div class="narrae-presenter__path-row">
+      <input id="narrae-presenter-path" type="text" name="imagePath" value="{{imagePath}}" placeholder="worlds/mon-monde/images/scene.webp">
+      <button type="button" data-action="browse" title="Parcourir">
+        <i class="fas fa-folder-open"></i>
+      </button>
+    </div>
+  </div>
+
+  {{#if error}}
+    <p class="narrae-presenter__error">{{error}}</p>
+  {{/if}}
+
+  <section class="narrae-presenter__preview">
+    {{#if hasImage}}
+      <img src="{{imagePath}}" alt="{{imageName}}">
+      <span>{{imageName}}</span>
+    {{else}}
+      <span>Aucune image sélectionnée</span>
+    {{/if}}
+  </section>
+
+  <section class="narrae-presenter__actions">
+    <button type="button" data-action="createTile">
+      <i class="fas fa-map"></i>
+      Créer Tile
+    </button>
+    <button type="button" data-action="showPlayers">
+      <i class="fas fa-display"></i>
+      Show Players
+    </button>
+    <button type="button" data-action="showWhiteboard">
+      <i class="fas fa-chalkboard"></i>
+      Whiteboard
+    </button>
+  </section>
+
+  <section class="narrae-presenter__active">
+    <h3>Présentations actives</h3>
+    {{#if hasPresentations}}
+      <ol>
+        {{#each presentations}}
+          <li>
+            <div>
+              <strong>{{name}}</strong>
+              <span>{{typeLabel}}</span>
+            </div>
+            <button type="button" data-action="closePresentation" data-id="{{id}}" title="Fermer pour tous">
+              <i class="fas fa-times"></i>
+            </button>
+          </li>
+        {{/each}}
+      </ol>
+    {{else}}
+      <p>Aucune présentation active</p>
+    {{/if}}
+  </section>
+</div>

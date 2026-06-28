@@ -1,0 +1,25 @@
+{
+  "id": "narrae-presenter",
+  "title": "Narrae Presenter",
+  "description": "GM presentation layer for showing images as tiles, fullscreen overlays, or floating whiteboards independently from canvas vision and fog.",
+  "version": "0.1.0",
+  "compatibility": {
+    "minimum": "13",
+    "verified": "13"
+  },
+  "authors": [
+    {
+      "name": "NARRAE"
+    }
+  ],
+  "esmodules": [
+    "scripts/module.js"
+  ],
+  "styles": [
+    "styles/narrae-presenter.css"
+  ],
+  "socket": true,
+  "url": "",
+  "manifest": "",
+  "download": ""
+}

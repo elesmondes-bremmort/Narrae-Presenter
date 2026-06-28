@@ -19,7 +19,7 @@
     "styles/narrae-presenter.css"
   ],
   "socket": true,
-  "url": "https://github.com/elesmondes-bremmort/Narrae-Presenter",
   "manifest": "https://raw.githubusercontent.com/elesmondes-bremmort/Narrae-Presenter/main/module.json",
-  "download": "https://github.com/elesmondes-bremmort/Narrae-Presenter/releases/download/v0.1.0/narrae-presenter.zip"
+  "download": "https://github.com/elesmondes-bremmort/Narrae-Presenter/archive/refs/heads/main.zip",
+  "url": "https://github.com/elesmondes-bremmort/Narrae-Presenter"
 }

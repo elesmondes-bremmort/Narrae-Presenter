@@ -1,5 +1,5 @@
 import { MODULE_ID, SETTINGS, SOCKET_ACTIONS, PRESENTATION_TYPES } from "./constants.js";
-import { createPresentationId, imagePathFromDrop, isSupportedImagePath, normalizeImagePath, shortImageName } from "./image-utils.js";
+import { createPresentationId, extractImagePathFromDrop, isSupportedImagePath, normalizeImagePath, shortImageName } from "./image-utils.js";
 import { createTileFromImage } from "./tile-service.js";
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
@@ -68,12 +68,12 @@ export class NarraePresenterApp extends HandlebarsApplicationMixin(ApplicationV2
     dropzone?.addEventListener("drop", async (event) => {
       event.preventDefault();
       dropzone.classList.remove("is-dragging");
-      const path = await imagePathFromDrop(event);
-      if (!path) {
-        this.#setError("Drop non reconnu. Déposez une image Foundry ou saisissez son chemin manuellement.");
+      const result = await extractImagePathFromDrop(event);
+      if (!result.path) {
+        this.#setError(result.error);
         return;
       }
-      this.#setImagePath(path);
+      this.#setImagePath(result.path);
     });
 
     pathInput?.addEventListener("change", (event) => this.#setImagePath(event.currentTarget.value));

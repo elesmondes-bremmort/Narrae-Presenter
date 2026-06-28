@@ -2,7 +2,7 @@
   "id": "narrae-presenter",
   "title": "Narrae Presenter",
   "description": "GM presentation layer for showing images as tiles, fullscreen overlays, or floating whiteboards independently from canvas vision and fog.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "compatibility": {
     "minimum": "13",
     "verified": "13"
@@ -20,6 +20,6 @@
   ],
   "socket": true,
   "manifest": "https://raw.githubusercontent.com/elesmondes-bremmort/Narrae-Presenter/main/module.json",
-  "download": "https://github.com/elesmondes-bremmort/Narrae-Presenter/archive/refs/heads/main.zip",
+  "download": "https://github.com/elesmondes-bremmort/Narrae-Presenter/releases/download/v0.1.1/narrae-presenter.zip",
   "url": "https://github.com/elesmondes-bremmort/Narrae-Presenter"
 }

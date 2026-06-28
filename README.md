@@ -2,7 +2,7 @@
 
 Narrae Presenter is a Foundry VTT v13 module for GMs who need to present images independently from the canvas, dynamic vision, and fog of war.
 
-Version: `0.1.1`
+Version: `0.1.2`
 
 ## Features
 
@@ -21,4 +21,4 @@ Place this folder in Foundry's `Data/modules/narrae-presenter` directory, then e
 
 ## Proposed Commit Message
 
-`fix: support robust image drops from Origin Vault`
+`fix: capture Origin Vault drops inside presenter window`

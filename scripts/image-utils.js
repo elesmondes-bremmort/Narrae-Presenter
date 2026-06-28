@@ -134,13 +134,13 @@ function debugDropPayload(transfer) {
   const requestedTypes = ["text/plain", "text/uri-list", "text/html", "application/json", "text"];
   const allTypes = Array.from(new Set([...requestedTypes, ...types]));
 
-  console.groupCollapsed("[Narrae Presenter] Drop payload");
+  console.groupCollapsed("[Narrae Presenter] drop payload");
   console.log("types", types);
 
   for (const type of allTypes) {
     try {
       const value = transfer.getData(type);
-      if (value) console.log(type, value);
+      console.log(type, value || "<empty>");
     } catch {
       console.log(type, "<unavailable>");
     }
@@ -165,7 +165,7 @@ function getTransferData(transfer, type) {
 }
 
 function unrecognizedDropMessage() {
-  return "Drop non reconnu. Ouvrez la console F12 et envoyez le groupe [Narrae Presenter] Drop payload pour diagnostic.";
+  return "Drop non reconnu. Ouvrez la console F12 et envoyez le groupe [Narrae Presenter] drop payload pour diagnostic.";
 }
 
 async function imagePathFromData(data) {

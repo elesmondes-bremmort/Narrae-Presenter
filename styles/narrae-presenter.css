@@ -1,5 +1,6 @@
 .narrae-presenter .window-content {
   padding: 0;
+  pointer-events: auto;
 }
 
 .narrae-presenter__body {
@@ -8,6 +9,7 @@
   gap: 12px;
   min-height: 100%;
   padding: 12px;
+  pointer-events: auto;
 }
 
 .narrae-presenter__dropzone {
@@ -20,6 +22,7 @@
   border-radius: 6px;
   background: rgba(255, 255, 255, 0.04);
   text-align: center;
+  pointer-events: auto;
 }
 
 .narrae-presenter__dropzone i {
@@ -34,7 +37,13 @@
   font-size: 12px;
 }
 
-.narrae-presenter__dropzone.is-dragging {
+.narrae-presenter.is-drag-over .window-content,
+.narrae-presenter__body.is-drag-over {
+  outline: 1px solid var(--color-border-highlight, #f0b040);
+  outline-offset: -3px;
+}
+
+.narrae-presenter__dropzone.is-drag-over {
   border-color: var(--color-border-highlight, #f0b040);
   background: rgba(240, 176, 64, 0.12);
 }

@@ -39,6 +39,7 @@ export class NarraePresenterApp extends HandlebarsApplicationMixin(ApplicationV2
     this.imagePath = "";
     this.error = "";
     this.presentations = [];
+    this.dropListenersController = null;
   }
 
   async _prepareContext(options) {
@@ -55,26 +56,11 @@ export class NarraePresenterApp extends HandlebarsApplicationMixin(ApplicationV2
   _onRender(context, options) {
     super._onRender(context, options);
     const element = this.element;
+    const body = element.querySelector(`.${MODULE_ID}__body`);
     const dropzone = element.querySelector("[data-dropzone]");
     const pathInput = element.querySelector("[name='imagePath']");
 
-    dropzone?.addEventListener("dragover", (event) => {
-      event.preventDefault();
-      dropzone.classList.add("is-dragging");
-    });
-
-    dropzone?.addEventListener("dragleave", () => dropzone.classList.remove("is-dragging"));
-
-    dropzone?.addEventListener("drop", async (event) => {
-      event.preventDefault();
-      dropzone.classList.remove("is-dragging");
-      const result = await extractImagePathFromDrop(event);
-      if (!result.path) {
-        this.#setError(result.error);
-        return;
-      }
-      this.#setImagePath(result.path);
-    });
+    this.#attachDropListeners([dropzone, body, element]);
 
     pathInput?.addEventListener("change", (event) => this.#setImagePath(event.currentTarget.value));
     pathInput?.addEventListener("input", (event) => {
@@ -112,6 +98,67 @@ export class NarraePresenterApp extends HandlebarsApplicationMixin(ApplicationV2
       return "";
     }
     return this.imagePath;
+  }
+
+  #attachDropListeners(targets) {
+    this.dropListenersController?.abort();
+    this.dropListenersController = new AbortController();
+    const options = { capture: true, signal: this.dropListenersController.signal };
+
+    for (const target of targets.filter(Boolean)) {
+      target.addEventListener("dragenter", (event) => this.#onDragEvent(event), options);
+      target.addEventListener("dragover", (event) => this.#onDragEvent(event), options);
+      target.addEventListener("dragleave", (event) => this.#onDragLeave(event), options);
+      target.addEventListener("drop", (event) => this.#onDrop(event), options);
+    }
+  }
+
+  #onDragEvent(event) {
+    this.#claimDragEvent(event);
+    this.#debugDragEvent(event);
+    this.#setDragOver(true);
+  }
+
+  #onDragLeave(event) {
+    this.#claimDragEvent(event);
+    this.#debugDragEvent(event);
+
+    const root = this.element;
+    const nextTarget = event.relatedTarget;
+    if (!nextTarget || !root.contains(nextTarget)) this.#setDragOver(false);
+  }
+
+  async #onDrop(event) {
+    this.#claimDragEvent(event);
+    this.#debugDragEvent(event);
+    this.#setDragOver(false);
+
+    const result = await extractImagePathFromDrop(event);
+    if (!result.path) {
+      this.#setError(result.error);
+      return;
+    }
+
+    this.#setImagePath(result.path);
+  }
+
+  #claimDragEvent(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+    if (event.dataTransfer) event.dataTransfer.dropEffect = "copy";
+  }
+
+  #debugDragEvent(event) {
+    if (!game.user.isGM) return;
+    console.log(`[Narrae Presenter] ${event.type} received`, Array.from(event.dataTransfer?.types ?? []));
+  }
+
+  #setDragOver(active) {
+    const element = this.element;
+    element.classList.toggle("is-drag-over", active);
+    element.querySelector(`.${MODULE_ID}__body`)?.classList.toggle("is-drag-over", active);
+    element.querySelector("[data-dropzone]")?.classList.toggle("is-drag-over", active);
   }
 
   async #persistPosition() {
